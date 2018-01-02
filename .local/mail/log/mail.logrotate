@@ -1,0 +1,11 @@
+# /etc/logrotate.d/mail-logs
+
+# rotate logs for david's mail apps: msmtp, msmtpq, offlineimap, astroid
+
+/home/david/.local/mail/log/*.log {
+    rotate 104
+    weekly
+    compress
+    notifempty
+    missingok
+}
