@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# ~/.local/mail/maildirs/.notmuch/hooks/pre-new
+
+# notmuch hook script: pre-new
+
+# delete mail files with tag 'delete'
+# - taken from https://notmuchmail.org/excluding/
+notmuch search --format=text0 --output=files tag:delete \
+    | xargs -0 --no-run-if-empty rm
+
+# force exit with success, otherwise notmuch will fail out
+exit 0

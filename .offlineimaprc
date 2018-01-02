@@ -1,0 +1,75 @@
+# ~/.offlineimaprc
+
+# offlineimap configuration file
+
+[general]
+#accounts = hotkey,bigpond,gmail
+accounts = hotkey,bigpond
+ui = ttyui
+pythonfile = /home/david/.local/mail/utils/offlineimap.py
+maxsyncaccounts = 5
+
+[Account hotkey]
+localrepository = hotkey-local
+remoterepository = hotkey-remote
+
+[Account bigpond]
+localrepository = bigpond-local
+remoterepository = bigpond-remote
+
+[Account gmail]
+localrepository = gmail-local
+remoterepository = gmail-remote
+
+[Repository hotkey-local]
+type = Maildir
+localfolders = ~/.local/mail/maildirs/hotkey
+
+[Repository hotkey-remote]
+type = IMAP
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remotehost = pop.hotkey.net.au
+starttls = no
+remoteuser = davidnebauer
+remotepasseval = subprocess.check_output(['secret-tool', 'lookup', 'isp', 'hotkey']).strip()
+
+[Repository bigpond-local]
+type = Maildir
+localfolders = ~/.local/mail/maildirs/bigpond
+
+[Repository bigpond-remote]
+type = IMAP
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remotehost = mail.bigpond.com
+remoteuser = davidnebauer3@bigpond.com
+remotepasseval = subprocess.check_output(['secret-tool', 'lookup', 'isp', 'bigpond']).strip()
+
+[Repository gmail-local]
+type = Maildir
+localfolders = ~/.local/mail/maildirs/gmail
+nametrans: lambda s: dict((value,key) for key,value in
+                      {  '[Gmail]/Starred' : 'starred',
+                         '[Gmail]/Trash'   : 'trash',
+                         '[Gmail]/Spam'    : 'spam',
+                         '[Gmail]/Sent Mail' : 'sent',
+                         '[Gmail]/Important' : 'important',
+                         '[Gmail]/Drafts'    : 'drafts',
+                         '[Gmail]/All Mail'  : 'archive',
+                         'INBOX'             : 'inbox',
+                      }.iteritems()).get (s, s).decode ('utf8').encode ('imap4-utf-7')
+
+[Repository gmail-remote]
+type = Gmail
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remotehost = imap.gmail.com
+remoteuser = davidnebauer@gmail.com
+remotepass = %%y0"#*7X(qD7
+nametrans: lambda s: {  '[Gmail]/Starred' : 'starred',
+                        '[Gmail]/Trash'   : 'trash',
+                        '[Gmail]/Spam'    : 'spam',
+                        '[Gmail]/Sent Mail' : 'sent',
+                        '[Gmail]/Important' : 'important',
+                        '[Gmail]/Drafts'    : 'drafts',
+                        '[Gmail]/All Mail'  : 'archive',
+                        'INBOX'             : 'inbox',
+                      }.get (s, s).decode ('imap4-utf-7').encode ('utf8')

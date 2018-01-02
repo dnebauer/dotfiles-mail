@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# ~/.config/astroid/hooks/toggle
+
+# astroid hook: toggle tag on a message thread
+
+# params: 1 - tag
+#         2 - thread id
+
+# check if the thread matches the tag
+if [[ $(notmuch search thread:$2 and tag:$1) ]] ; then
+	echo "removing tag: $1 from thread:$2"
+	notmuch tag -$1 thread:$2  # remove the tag
+else
+	echo "adding tag: $1 to thread:$2"
+	notmuch tag +$1 thread:$2  # add the tag
+fi

@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# ~/.local/mail/maildirs/.notmuch/hooks/post-new
+
+# notmuch hook script: post-new
+
+# prepare the desktop notification messages
+newcount=$(notmuch count tag:new)
+summary="Email: ${newcount} new message"
+[ $newcount -gt 1 ] && summary="${summary}s"
+[ $newcount -gt 0 ] && detail="$(notmuch search --output=summary --format=json tag:new | sed -e 's/.*authors": "//;s/|[^"]*"/"/;s/", "subject": "/ : /;s/".*//')"
+
+# remove the 'new' tag once we're finished here
+notmuch tag -new -- tag:new
+
+# it is a fatal error to not have DISPLAY -- when Astroid starts,
+# it should add DISPLAY to systemd --user's environment
+mailicon="/usr/share/icons/HighContrast/scalable/actions/mail-message-new.svg"
+if [ "x$DISPLAY" != "x" ] ; then
+    # desktop notifications
+    if [ $newcount -gt 0 ] ; then
+        logger -t notmuch "calling notify-send '$summary' '$detail'"
+        notify-send -i "${mailicon}" "$summary" "$detail"
+    fi
+fi
+
+# force exit with success, otherwise notmuch will fail out
+exit 0
