@@ -6,7 +6,7 @@
 
 # delete mail files with tag 'delete'
 # - taken from https://notmuchmail.org/excluding/
-notmuch search --format=text0 --output=files tag:delete \
+notmuch search --output=files --format=text0 tag:delete \
     | xargs -0 --no-run-if-empty rm
 
 # force exit with success, otherwise notmuch will fail out

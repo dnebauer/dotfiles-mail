@@ -13,8 +13,9 @@ summary="Email: ${newcount} new message"
 # remove the 'new' tag once we're finished here
 notmuch tag -new -- tag:new
 
-# it is a fatal error to not have DISPLAY -- when Astroid starts,
-# it should add DISPLAY to systemd --user's environment
+# display desktop notification message
+# - it is a fatal error to not have DISPLAY -- when Astroid starts,
+#   it should add DISPLAY to systemd --user's environment
 mailicon="/usr/share/icons/HighContrast/scalable/actions/mail-message-new.svg"
 if [ "x$DISPLAY" != "x" ] ; then
     # desktop notifications
