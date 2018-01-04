@@ -20,11 +20,9 @@ main_window.search=/ # Search, default: o
 thread_view.next_unread= # Focus the next unread message, default: Key (GDK_KEY_Tab)
 thread_view.previous_unread= # Focus the previous unread message, default: Key (false, false, (guint) GDK_KEY_ISO_Left_Tab)
 
-# swap bindings for colon and semicolon in thread view
-# - thread_view.multi and thread_view.multi_next_thread
-thread_view.multi=: # Apply action to marked messages, default: Key (GDK_KEY_semicolon)
-thread_view.multi_next_thread=; # Open next after.., default: Key (":")
-
-# change to colon since changed same action to colon in thread view
-thread_index.multi=: # Apply action to marked threads, default: Key (GDK_KEY_semicolon)
-
+# In thread view reassign n|p to move to next|previous thread
+# - simulate :+j
+thread_view.next_message= # Focus next message, default: n
+thread_view.previous_message= # Focus previous message, default: p
+thread_view.next_thread=n # Alias for thread_view.multi_next_thread.next_thread, no defaults.
+thread_view.previous_thread=p # Alias for thread_view.multi_next_thread.previous_thread, no defaults.
