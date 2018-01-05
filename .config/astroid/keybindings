@@ -8,12 +8,16 @@
 #   found in a file named 'keybindings-default' in the same directory
 #   as this file
 
+# / :: main :: search like vim
+main_window.search=/                 # Search, default: o
+
 # x :: thread index+view :: toggle tag 'delete'
 thread_index.run(hooks::toggle delete %1)=x
 thread_view.run(hooks::toggle delete %1)=x
 
-# / :: main :: search like vim
-main_window.search=/ # Search, default: o
+# \ :: thread index+view :: edit tags for thread
+thread_index.tag=\                   # Edit tags for thread, default: +
+thread_view.tag_message=\            # Tag message, default: +
 
 # Tab|Shift-Tab :: unbind :: jump to next|previous html element
 # - unbinding results in them being passed directly to webkit
