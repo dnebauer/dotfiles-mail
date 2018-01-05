@@ -8,27 +8,48 @@
 #   found in a file named 'keybindings-default' in the same directory
 #   as this file
 
-# / :: main :: search like vim
-main_window.search=/             # Search, default: o
+# ----
+# Main
+# ----
 
-# 4 :: thread index :: refresh query
-# - previous binding was to '$', on top of '4' key on us qwerty keyboard
+# / = search like vim
+
+main_window.search=/             # Search,
+                                 # default: o
+
+# ------------
+# Thread Index
+# ------------
+
+# 4 = refresh query
+
 thread_index.refresh=4           # Refresh query,
                                  # default: Key((guint) GDK_KEY_dollar)
 
-# x :: thread index+view :: toggle tag 'delete'
+# --------------------------
+# Thread Index + Thread View
+# --------------------------
+
+# x = toggle tag 'delete'
+
 thread_index.run(hooks::toggle delete %1)=x
 thread_view.run(hooks::toggle delete %1)=x
 
-# \ :: thread index+view :: edit tags for thread
+# \ = edit tags for thread
+
 thread_index.tag=\               # Edit tags for thread,
                                  # default: +
 
 thread_view.tag_message=\        # Tag message,
                                  # default: +
 
-# Tab|Shift-Tab :: unbind :: jump to next|previous html element
+# -----------
+# Thread View
+# -----------
+
+# Tab|Shift-Tab = jump to next|previous html element
 # - unbinding results in them being passed directly to webkit
+
 thread_view.next_unread=         # Focus the next unread message,
                                  # default: Key (GDK_KEY_Tab)
 
@@ -36,8 +57,9 @@ thread_view.previous_unread=     # Focus the previous unread message,
                                  # default: Key (false, false, (guint)
                                  #               GDK_KEY_ISO_Left_Tab)
 
-# j|k :: thread view :: move to next|previous thread
+# j|k = move to next|previous thread
 # - first unbind keys from down|up
+
 thread_view.down=                # Scroll down or move focus to next element,
                                  # default: j
 
