@@ -68,7 +68,7 @@
         "interval": "300"
     },
     "attachment": {
-        "external_open_cmd": "xdg-open"
+        "external_open_cmd": "astroid-scan-and-open"
     },
     "thread_view": {
         "open_html_part_external": "false",

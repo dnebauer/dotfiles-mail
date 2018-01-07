@@ -80,7 +80,13 @@
         "interval": "300"
     },
     "attachment": {
-        "external_open_cmd": "xdg-open"
+        //"external_open_cmd": "xdg-open"
+        // replace with local wrapper for xdg-open that
+        // first scans for viruses then remains open until
+        // attachment closes (because sometimes astroid
+        // will delete an attachment before xdg-open opens
+        // the attachment file)
+        "external_open_cmd": "astroid-scan-and-open"
     },
     "thread_view": {
         "open_html_part_external": "false",
