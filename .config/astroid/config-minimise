@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# File: config-minimise.sh
+# Author: David Nebauer (david at nebauer dot org)
+# Purpose: minimise astroid config file
+# Created: 2018-01-04
+
+DIR="${HOME}/.config/astroid"
+python -m jsmin "${DIR}/config-annotated" > "${DIR}/config"

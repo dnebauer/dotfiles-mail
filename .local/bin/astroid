@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# wrapper for /usr/bin/astroid
+
+ASTROID="/usr/bin/astroid"
+LOG="$HOME/.local/mail/log/astroid.log"
+LOG_LEVEL="trace"  # trace, debug, info, warning, error, fatal
+#export GI_TYPELIB_PATH='/usr/lib/girepository-1.0'
+
+unbuffer \
+"$ASTROID" \
+    --log-level "$LOG_LEVEL" \
+    --log "$LOG" \
+    "$@" \
+    &>/dev/null \
+&

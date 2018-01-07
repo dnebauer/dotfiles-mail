@@ -21,7 +21,7 @@ if [ "x$DISPLAY" != "x" ] ; then
     # desktop notifications
     if [ $newcount -gt 0 ] ; then
         logger -t notmuch "calling notify-send '$summary' '$detail'"
-        notify-send -i "${mailicon}" "$summary" "$detail"
+        notify-send -i "$mailicon" "$summary" "$detail"
     fi
 fi
 
