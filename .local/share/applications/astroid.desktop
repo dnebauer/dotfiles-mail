@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Astroid Mail
+Comment=Graphical notmuch email client local
+Exec=bash -ic "/usr/bin/astroid --log /home/david/.local/mail/log/astroid.log %u &"
+Icon=astroid
+Terminal=true
+Type=Application
+Keywords=Email;E-mail;
+Categories=Network;Email;
+MimeType=x-scheme-handler/mailto;
