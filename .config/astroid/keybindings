@@ -12,7 +12,7 @@
 # Main
 # ----
 
-# / = search like vim
+# / :: search like vim
 
 main_window.search=/             # Search,
                                  # default: o
@@ -21,7 +21,7 @@ main_window.search=/             # Search,
 # Thread Index
 # ------------
 
-# 4 = refresh query
+# 4 :: refresh query
 
 thread_index.refresh=4           # Refresh query,
                                  # default: Key((guint) GDK_KEY_dollar)
@@ -30,17 +30,17 @@ thread_index.refresh=4           # Refresh query,
 # Thread Index + Thread View
 # --------------------------
 
-# x = toggle tag 'delete'
+# x :: toggle tag 'delete'
 
 thread_index.run(hooks::toggle delete %1)=x
 thread_view.run(hooks::toggle delete %1)=x
 
-# \ = edit tags for thread
+# = :: edit tags for thread
 
-thread_index.tag=\               # Edit tags for thread,
+thread_index.tag=equal           # Edit tags for thread,
                                  # default: +
 
-thread_view.tag_message=\        # Tag message,
+thread_view.tag_message=equal    # Tag message,
                                  # default: +
 
 # -----------
