@@ -1,0 +1,134 @@
+#!/usr/bin/env bash
+
+# Update astroid install tree
+
+set -e
+
+# VARIABLES
+
+self="$(basename $0)"
+args="${*}"
+repo='https://github.com/astroidmail/astroid.git'
+curdir="$(pwd)"
+gitdir="${curdir}/repo/.git"
+installdir="${curdir}/install"
+
+# PROCEDURES
+
+# Show usage
+#   params: nil
+#   prints: nil
+#   return: nil
+displayUsage () {
+cat << _USAGE
+${self}: Update astroid install tree
+
+Assumes the following two subdirectories in the cwd:
+install, repo.
+
+This script downloads the current github repository for
+astroid into the 'repo' subdirectory, compiles it and
+installs it into the 'install' subdirectory.
+
+Dependencies: git, cmake and ninja. Numerous other
+dependencies are required for the source to compile. If any
+of these are missing the script will abort. For this reason
+this script should not be used for the first build.
+
+The script will check whether the current repository is up
+to date. If it is, the script exits. If the script is not
+up to date, the current contents of the 'repo' and 'install'
+directories are removed and the following commands are
+executed in sequence:
+    set -e
+    cd repo
+    git clone ${repo} ./
+    cmake -H. -Bbuild -GNinja -DCMAKE_INSTALL_PREFIX=/usr
+    cd build
+    ninja
+    #ninja test  # disabled because markdown test fails
+    cd ..
+    export DESTDIR=\$(pwd)/install
+    cmake --build build --target install
+
+Usage: ${self}
+       ${self} -h
+_USAGE
+}
+# Process command line
+#   params: all command line parameters
+#   prints: feedback
+#   return: nil
+processCommandLine () {
+	# Read the command line options
+	#   - if optstring starts with ':' then error reporting is suppressed
+	#     leave ':' at start as '\?' and '\:' error capturing require it
+	#   - if option is followed by ':' then it is expected to have an argument
+	while getopts ":h" opt ; do
+		case ${opt} in
+			'h' ) displayUsage && exit 0;;
+			\?  ) echo -e "Error: Invalid flag '${OPTARG}' detected"
+				  echo -e "Usage: ${self}"
+				  echo -e "Try '${self} -h' for help"
+				  exit 1;;
+		esac
+	done
+	shift $(( ${OPTIND} - 1 ))
+	args="${*}"  # reset arguments
+}
+
+
+# MAIN
+
+# Process command line
+processCommandLine "${@}"
+while [ "${*}" != "${args}" ] ; do shift ; done
+unset args
+
+# Check for required tools
+for tool in git cmake ninja ; do
+    if ! which "${tool}" &>/dev/null ; then
+        echo "Can't find required tool '${tool}' - aborting"
+        exit 1
+    fi
+done
+
+# Check whether repo up to date
+cd repo
+if git status &>/dev/null ; then  # is a git repo
+    output=`git --git-dir="${gitdir}" pull`
+    if [ "${output}" = 'Already up to date.' ] ; then
+        echo 'Astroid repo is already up to date'
+        echo 'Presume install is also up to date'
+        exit
+    fi
+fi
+cd ..
+
+# Remove previous repo and install
+for dir in repo install ; do
+    rm -fr "${dir}"
+    mkdir "${dir}"
+done
+
+# Download repo
+cd repo
+git clone ${repo} ./
+cd ..
+
+# Compile and build
+cd repo
+cmake -H. -Bbuild -GNinja -DCMAKE_INSTALL_PREFIX=/usr
+cd build
+ninja
+#ninja test  # disabled because markdown test fails
+
+# Install
+cd ..
+DESTDIR="${installdir}"
+export DESTDIR
+cmake --build build --target install
+cd ..
+
+# Exit
+echo "Successful compile and install"
