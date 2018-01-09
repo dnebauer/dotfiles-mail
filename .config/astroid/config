@@ -65,7 +65,8 @@
         "send_delay": "0"
     },
     "poll": {
-        "interval": "300"
+        "interval": "300",
+        "always_full_refresh": "true"
     },
     "attachment": {
         "external_open_cmd": "astroid-scan-and-open"
