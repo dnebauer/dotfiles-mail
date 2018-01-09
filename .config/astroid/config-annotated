@@ -1,10 +1,19 @@
-/* ~/.config/astroid/config-annotated
-/
+/* ~/.config/astroid/config-annotated */
+
+/*
 / create config with command:
 /   python -m jsmin config-annotated > config
 /
 / python module jsmin installed using pip
 */
+
+/* 
+/ incorrect end-of-line comma placement causes fatal crash during startup
+/
+/ the rule for eol commas is:
+/   put comma on end of line unless indent level changes on following line
+*/
+
 {
     "astroid": {
         "config": {
@@ -21,7 +30,6 @@
     "thread_index": {
         "page_jump_rows": "6",
         "sort_order": "oldest",
-        "thread_load_step": "250",
         "cell": {
             "font_description": "default",
             "line_spacing": "2",
@@ -36,7 +44,8 @@
             "tags_lower_color": "#333333",
             "tags_alpha": "0.5",
             "hidden_tags": "attachment,flagged,unread"
-        }
+        },
+        "thread_load_step": "250"
     },
     "general": {
         "time": {
