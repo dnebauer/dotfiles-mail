@@ -28,6 +28,7 @@ localfolders = ~/.local/mail/maildirs/hotkey
 [Repository hotkey-remote]
 type = IMAP
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+#remotehost = pop.iprimus.com.au
 remotehost = pop.hotkey.net.au
 starttls = no
 remoteuser = davidnebauer
