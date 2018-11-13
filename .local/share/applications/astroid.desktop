@@ -1,8 +1,14 @@
 [Desktop Entry]
 Name=Astroid Mail
-Comment=Graphical notmuch email client local
-Exec=bash -ic "/usr/bin/astroid --log /home/david/.local/mail/log/astroid.log %u &"
+Comment=Graphical notmuch email client (interactive shell)
+#Exec=astroid %u
+# When default Exec command is used astroid fails to send email
+# Requires interactive shell session, i.e., 'bash -i'
+# For further details see astroid issue #450 at
+# https://github.com/astroidmail/astroid/issues/450
+Exec=bash -ic "/usr/bin/astroid %u &"
 Icon=astroid
+#Terminal=false
 Terminal=true
 Type=Application
 Keywords=Email;E-mail;
