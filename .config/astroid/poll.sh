@@ -13,7 +13,7 @@ if ! ping -w 1 -W 1 -c 1 mail.google.com &>/dev/null ; then
 fi
 
 # fetch new mail
-offlineimap -o -u quiet -l $HOME/.local/mail/log/offlineimap.log
+offlineimap -o -u quiet -l "$HOME/.local/mail/log/offlineimap.log"
 
 # notmuch check for new mail
 notmuch new

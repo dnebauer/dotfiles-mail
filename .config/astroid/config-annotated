@@ -17,7 +17,7 @@
 {
     "astroid": {
         "config": {
-            "version": "10"
+            "version": "11"
         },
         "notmuch_config": "\/home\/david\/.notmuch-config",
         "debug": {
@@ -25,108 +25,12 @@
         },
         "hints": {
             "level": "0"
+        },
+        "log": {
+            "syslog": "false",
+            "stdout": "true",
+            "level": "info"
         }
-    },
-    "thread_index": {
-        "page_jump_rows": "6",
-        "sort_order": "oldest",
-        "cell": {
-            "font_description": "default",
-            "line_spacing": "2",
-            "date_length": "10",
-            "message_count_length": "4",
-            "authors_length": "20",
-            "subject_color": "#807d74",
-            "subject_color_selected": "#000000",
-            "background_color_selected": "",
-            "tags_length": "80",
-            "tags_upper_color": "#e5e5e5",
-            "tags_lower_color": "#333333",
-            "tags_alpha": "0.5",
-            "hidden_tags": "attachment,flagged,unread"
-        },
-        "thread_load_step": "250"
-    },
-    "general": {
-        "time": {
-            "clock_format": "local",
-            "same_year": "%b %-e",
-            "diff_year": "%x"
-        }
-    },
-    "editor": {
-        // embedded gvim
-        // - as default plus move to 'To:' line, then try to insert at eol
-        //   (except for unknown reason inserts at start of line)
-        "cmd": "gvim -geom 10x10 --servername %2 --socketid %3 -f '+set ft=mail' '+set fileencoding=utf-8' '+set ff=unix' '+set enc=utf-8' '+set fo+=w' '+/^To:/' '+startinsert!' %1",
-        // embedded st (suckless simple terminal) running nvim
-        // - as per https://github.com/astroidmail/astroid/wiki/Customizing-editor#neovim-through-st
-        // - plus commands as per gvim command above
-        //"cmd": "stterm -f 'Inconsolata:size=22' -w %3 -e nvim '+set ft=mail' '+set fileencoding=utf-8' '+set ff=unix' '+set enc=utf-8' '+set fo+=w' '+/^To:/' '+startinsert!' %1",
-        "external_editor": "false",
-        "charset": "utf-8",
-        "save_draft_on_force_quit": "true",
-        "attachment_words": "attach",
-        "attachment_directory": "~",
-        "markdown_processor": "marked"
-    },
-    "mail": {
-        "reply": {
-            "quote_line": "Excerpts from %1's message of %2:",
-            "mailinglist_reply_to_sender": "true"
-        },
-        "forward": {
-            "quote_line": "Forwarding %1's message of %2:",
-            "disposition": "inline"
-        },
-        "sent_tags": "sent",
-        "message_id_fqdn": "",
-        "message_id_user": "",
-        "user_agent": "default",
-        "send_delay": "0"
-    },
-    "poll": {
-        "interval": "300",
-        // refresh thread index after each poll
-        "always_full_refresh": "true"
-    },
-    "attachment": {
-        //"external_open_cmd": "xdg-open"
-        // replace with local wrapper for xdg-open that
-        // first scans for viruses then remains open until
-        // attachment closes (because sometimes astroid
-        // will delete an attachment before xdg-open opens
-        // the attachment file)
-        "external_open_cmd": "astroid-scan-and-open"
-    },
-    "thread_view": {
-        "open_html_part_external": "false",
-        "open_external_link": "xdg-open",
-        "default_save_directory": "~",
-        "indent_messages": "false",
-        "code_prettify": {
-            "enable": "true",
-            "for_tags": "",
-            "code_tag": "```",
-            "enable_for_patches": "true"
-        },
-        "gravatar": {
-            "enable": "true"
-        },
-        "mark_unread_delay": "0.5",
-        "expand_flagged": "true"
-    },
-    "crypto": {
-        "gpg": {
-            "path": "gpg2",
-            "always_trust": "true"
-        }
-    },
-    "saved_searches": {
-        "show_on_startup": "false",
-        "save_history": "true",
-        "history_lines_to_show": "15",
-        "history_lines": "1000"
     },
     "accounts": {
         "hotkey": {
@@ -170,5 +74,126 @@
         "queries": {
             "inbox": "tag:inbox"
         }
+    },
+    "terminal": {
+        "height": "10",
+        "font_description": "default"
+    },
+    "thread_index": {
+        "page_jump_rows": "6",
+        // change sort_order from default newest to oldest
+        "sort_order": "oldest",
+        "cell": {
+            "font_description": "default",
+            "line_spacing": "2",
+            "date_length": "10",
+            "message_count_length": "4",
+            "authors_length": "20",
+            "subject_color": "#807d74",
+            "subject_color_selected": "#000000",
+            "background_color_selected": "",
+            "background_color_marked": "#fff584",
+            "background_color_marked_selected": "#bcb559",
+            "tags_length": "80",
+            "tags_upper_color": "#e5e5e5",
+            "tags_lower_color": "#333333",
+            "tags_alpha": "0.5",
+            "hidden_tags": "attachment,flagged,unread"
+        }
+    },
+    "general": {
+        "time": {
+            "clock_format": "local",
+            "same_year": "%b %-e",
+            "diff_year": "%x"
+        }
+    },
+    "editor": {
+        // embedded gvim
+        // - as default plus move to 'To:' line, then try to insert at eol
+        //   (except for unknown reason inserts at start of line)
+        "cmd": "gvim -geom 10x10 --servername %2 --socketid %3 -f '+set ft=mail' '+set fileencoding=utf-8' '+set ff=unix' '+set enc=utf-8' '+set fo+=w' '+/^To:/' '+startinsert!' %1",
+        //"cmd": "gvim -geom 10x10 --servername %2 --socketid %3 -f '+set ft=mail' '+set fileencoding=utf-8' '+set ff=unix' '+set enc=utf-8' '+set fo+=w' \"+call SyntaxRange#Include('^\s*$', '\%$', 'markdown', 'NonText')\" '+/^To:/' '+startinsert!' %1",
+        // embedded st (suckless simple terminal) running nvim
+        // - as per https://github.com/astroidmail/astroid/wiki/Customizing-editor#neovim-through-st
+        // - plus commands as per gvim command above
+        //"cmd": "stterm -f 'Inconsolata:size=22' -w %3 -e nvim '+set ft=mail' '+set fileencoding=utf-8' '+set ff=unix' '+set enc=utf-8' '+set fo+=w' '+/^To:/' '+startinsert!' %1",
+        "external_editor": "false",
+        "charset": "utf-8",
+        "save_draft_on_force_quit": "true",
+        "attachment_words": "attach",
+        "attachment_directory": "~",
+        "markdown_processor": "marked"
+    },
+    "mail": {
+        "reply": {
+            "quote_line": "Excerpts from %1's message of %2:",
+            "mailinglist_reply_to_sender": "true"
+        },
+        "forward": {
+            "quote_line": "Forwarding %1's message of %2:",
+            "disposition": "inline"
+        },
+        "sent_tags": "sent",
+        "message_id_fqdn": "",
+        "message_id_user": "",
+        "user_agent": "default",
+        // change default send_delay of 2 to 0
+        // - no delay before sending mail
+        "send_delay": "0",
+        // change close_on_success from default false to true
+        // - close mail message window after successfully sent
+        "close_on_success": "true",
+        // if change format_flowed from default false to true must also
+        // change vim configuration (see
+        // github.com/astroidmail/astroid/wiki/Configuration-Reference)
+        "format_flowed": "false"
+    },
+    "poll": {
+        // change interval from default 60 to 300
+        // - poll slows system for unknown reason, so minimise inconvenience
+        "interval": "300",
+        // change always_full_refresh from default false to true
+        // - refresh thread index after each poll
+        "always_full_refresh": "true"
+    },
+    "attachment": {
+        // change external_open_cmd from default xdg-open to
+        // astroid-scan-and-open
+        // - a local wrapper for xdg-open that first scans for viruses
+        //   then remains open until the attachment closes
+        // - this is necessary because sometimes astroid will delete an
+        //   attachment before xdg-open opens the attachment file
+        "external_open_cmd": "astroid-scan-and-open"
+    },
+    "thread_view": {
+        "open_html_part_external": "false",
+        "preferred_type": "plain",
+        // change preferred_html_only from default false to true
+        // - shows html part if there is no plain part
+        // - requires open_html_part_external be set to false
+        "preferred_html_only": "true",
+        "allow_remote_when_encrypted": "false",
+        "open_external_link": "xdg-open",
+        "default_save_directory": "~",
+        "indent_messages": "false",
+        "gravatar": {
+            "enable": "true"
+        },
+        "mark_unread_delay": "0.5",
+        "expand_flagged": "true"
+    },
+    "crypto": {
+        "gpg": {
+            "path": "gpg2",
+            "always_trust": "true",
+            "enabled": "true"
+        }
+    },
+    "saved_searches": {
+        "show_on_startup": "false",
+        "save_history": "true",
+        "history_lines_to_show": "15",
+        "history_lines": "1000"
     }
 }

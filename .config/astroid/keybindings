@@ -14,8 +14,24 @@
 
 # / :: search like vim
 
-main_window.search=/             # Search,
-                                 # default: o
+main_window.search=/             # Search
+                                 # Default: o
+
+# c :: compose email
+
+main_window.new_mail=c           # Compose new mail
+                                 # Default: m
+
+# x :: close window
+
+main_window.close_page=x         # Close mode (or window if not last window)
+                                 # Default: C-w
+
+# X :: force close window
+
+main_window.close_page_force=X   # Force close mode (or window if not last
+                                 # window)
+                                 # Default: C-W
 
 # ------------
 # Thread Index
@@ -23,25 +39,39 @@ main_window.search=/             # Search,
 
 # 4 :: refresh query
 
-thread_index.refresh=4           # Refresh query,
-                                 # default: Key((guint) GDK_KEY_dollar)
+thread_index.refresh=4           # Refresh query
+                                 # Default: Key((guint) GDK_KEY_dollar)
 
 # --------------------------
 # Thread Index + Thread View
 # --------------------------
 
-# x :: toggle tag 'delete'
+# d :: toggle tag 'delete'
 
-thread_index.run(hooks::toggle delete %1)=x
-thread_view.run(hooks::toggle delete %1)=x
+thread_index.run(hooks::toggle delete %1)=d
+thread_view.run(hooks::toggle delete %1)=d
 
 # = :: edit tags for thread
 
-thread_index.tag=equal           # Edit tags for thread,
-                                 # default: +
+thread_index.tag=equal           # Edit tags for thread
+                                 # Default: +
 
-thread_view.tag_message=equal    # Tag message,
-                                 # default: +
+thread_view.tag_message=equal    # Tag message
+                                 # Default: +
+
+# R :: reply all
+
+thread_index.reply_all=R         # Reply all to last message in thread
+                                 # Default: G
+
+thread_index.reply_sender=G      # Reply to sender of last message in thread
+                                 # Default: R
+
+thread_view.reply_all=R          # Reply all to current message
+                                 # Default: G
+
+thread_view.reply_sender=G       # Reply to sender of current message
+                                 # Default: R
 
 # -----------
 # Thread View
@@ -50,28 +80,35 @@ thread_view.tag_message=equal    # Tag message,
 # Tab|Shift-Tab = jump to next|previous html element
 # - unbinding results in them being passed directly to webkit
 
-thread_view.next_unread=         # Focus the next unread message,
-                                 # default: Key (GDK_KEY_Tab)
+thread_view.next_unread=         # Focus the next unread message
+                                 # Default: Key (GDK_KEY_Tab)
 
-thread_view.previous_unread=     # Focus the previous unread message,
-                                 # default: Key (false, false, (guint)
+thread_view.previous_unread=     # Focus the previous unread message
+                                 # Default: Key (false, false, (guint)
                                  #               GDK_KEY_ISO_Left_Tab)
 
 # j|k = move to next|previous thread
 # - first unbind keys from down|up
 
-thread_view.down=                # Scroll down or move focus to next element,
-                                 # default: j
+thread_view.down=                # Scroll down or move focus to next element
+                                 # Default: j
 
-thread_view.up=                  # Scroll up or move focus to previous element,
-                                 # default: k
+thread_view.up=                  # Scroll up or move focus to previous element
+                                 # Default: k
 
-thread_view.next_thread=j        # Alias for thread_view
-                                 #           .multi_next_thread
-                                 #           .next_thread,
-                                 # no defaults.
+thread_view.next_thread=j        # Alias for thread_view.multi_next_thread\
+                                 # .next_thread
+                                 # no defaults
 
-thread_view.previous_thread=k    # Alias for thread_view.
-                                 #           .multi_next_thread
-                                 #           .previous_thread,
-                                 # no defaults.
+thread_view.previous_thread=k    # Alias for thread_view.multi_next_thread\
+                                 # .previous_thread
+                                 # no defaults
+
+# m = toggle tag 'spam'
+
+thread_view.run(hooks::toggle spam %1)=m
+
+# x = delete attachment while editing
+
+thread_view.delete_attachment=x # Delete attachment (if editing)
+                                # Default: d
