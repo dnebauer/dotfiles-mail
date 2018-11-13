@@ -1,2 +1,3 @@
-# vcsh-mail
-My personal mail configuration
+# dotfiles-mail
+
+My personal mail configuration.
