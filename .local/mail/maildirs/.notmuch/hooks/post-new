@@ -5,23 +5,41 @@
 # notmuch hook script: post-new
 
 # prepare the desktop notification messages
-newcount=$(notmuch count tag:new)
-summary="Email: ${newcount} new message"
-[ $newcount -gt 1 ] && summary="${summary}s"
-[ $newcount -gt 0 ] && detail="$(notmuch search --output=summary --format=json tag:new | sed -e 's/.*authors": "//;s/|[^"]*"/"/;s/", "subject": "/ : /;s/".*//')"
+NEWCOUNT=$(notmuch count tag:new)
+SUMMARY="Email: $NEWCOUNT new message"
+[ $NEWCOUNT -gt 1 ] && SUMMARY="${SUMMARY}"'s'
+[ $NEWCOUNT -gt 0 ] && DETAIL="$(notmuch search --output=summary --format=json tag:new | sed -e 's/.*authors": "//;s/|[^"]*"/"/;s/", "subject": "/ : /;s/".*//')"
 
-# remove the 'new' tag once we're finished here
-notmuch tag -new -- tag:new
+# tag changes:
+# - add 'old-to-address' tag if not sent to david@nebauer.id.au
+# - remove 'old-to-address' tag if sent via a listgroup
+# - remove the 'new' tag once we're finished here
+notmuch tag --batch <<EOF
+    +old-to-address -- tag:new and not to:david@nebauer.id.au
+    -old-to-address -- tag:new and to:ntg-context@ntg.nl
+    -old-to-address -- tag:new and to:qutebrowser@lists.qutebrowser.org
+    -old-to-address -- tag:new and to:perlweekly@perlweekly.com
+    -new            -- tag:new
+EOF
+
+# log outcome
+command -v logger && logger -t notmuch "$SUMMARY -- $DETAIL"
 
 # display desktop notification message
+USE_POPUP='false'
+command -v notify-send &>/dev/null && USE_POPUP='true'
+MAILICON='/usr/share/astroid/ui/icons/astroid.svg'
+USE_ICON='false'
+[ -e "$MAILICON" ] && USE_ICON='true'
 # - it is a fatal error to not have DISPLAY -- when Astroid starts,
 #   it should add DISPLAY to systemd --user's environment
-mailicon='/usr/share/astroid/ui/icons/astroid.svg'
-if [ "x$DISPLAY" != "x" ] ; then
-    # desktop notifications
-    if [ $newcount -gt 0 ] ; then
-        logger -t notmuch "calling notify-send '$summary' '$detail'"
-        notify-send -i "$mailicon" "$summary" "$detail"
+if [ "$USE_POPUP" = 'true' ] && [ "x$DISPLAY" != "x" ] ; then
+    if [ "$NEWCOUNT" -gt 0 ] ; then
+        if [ "$USE_ICON" = 'true' ] ; then
+            notify-send -i "$MAILICON" "$SUMMARY" "$DETAIL"
+        else
+            notify-send "$SUMMARY" "$DETAIL"
+        fi
     fi
 fi
 
