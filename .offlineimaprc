@@ -4,10 +4,15 @@
 
 [general]
 #accounts = hotkey,bigpond,gmail
-accounts = hotkey,bigpond
+accounts = austdomains,bigpond
+#accounts = bigpond
 ui = ttyui
 pythonfile = /home/david/.local/mail/utils/offlineimap.py
 maxsyncaccounts = 5
+
+[Account austdomains]
+localrepository = austdomains-local
+remoterepository = austdomains-remote
 
 [Account hotkey]
 localrepository = hotkey-local
@@ -21,6 +26,20 @@ remoterepository = bigpond-remote
 localrepository = gmail-local
 remoterepository = gmail-remote
 
+[Repository austdomains-local]
+type = Maildir
+localfolders = ~/.local/mail/maildirs/austdomains
+
+[Repository austdomains-remote]
+type = IMAP
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remotehost = cp-wc07.syd02.ds.network
+port = 993
+starttls = yes
+nametrans = lambda foldername: foldername.decode('imap4-utf-7').encode('utf-8')
+remoteuser = david@nebauer.id.au
+remotepasseval = subprocess.check_output(['secret-tool', 'lookup', 'isp', 'austdomains']).strip()
+
 [Repository hotkey-local]
 type = Maildir
 localfolders = ~/.local/mail/maildirs/hotkey
@@ -31,6 +50,7 @@ sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 #remotehost = pop.iprimus.com.au
 remotehost = pop.hotkey.net.au
 starttls = no
+nametrans = lambda foldername: foldername.decode('imap4-utf-7').encode('utf-8')
 remoteuser = davidnebauer
 remotepasseval = subprocess.check_output(['secret-tool', 'lookup', 'isp', 'hotkey']).strip()
 
@@ -43,6 +63,7 @@ type = IMAP
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 remotehost = mail.bigpond.com
 remoteuser = davidnebauer3@bigpond.com
+nametrans = lambda foldername: foldername.decode('imap4-utf-7').encode('utf-8')
 remotepasseval = subprocess.check_output(['secret-tool', 'lookup', 'isp', 'bigpond']).strip()
 
 [Repository gmail-local]
@@ -64,7 +85,7 @@ type = Gmail
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 remotehost = imap.gmail.com
 remoteuser = davidnebauer@gmail.com
-remotepass = %%y0"#*7X(qD7
+remotepass = %y0"#*7X(qD7
 nametrans: lambda s: {  '[Gmail]/Starred' : 'starred',
                         '[Gmail]/Trash'   : 'trash',
                         '[Gmail]/Spam'    : 'spam',
