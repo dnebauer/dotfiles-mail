@@ -59,6 +59,7 @@ thread_index.tag=equal           # Edit tags for thread
 thread_view.tag_message=equal    # Tag message
                                  # Default: +
 
+# G :: reply all
 # R :: reply all
 
 thread_index.reply_all=R         # Reply all to last message in thread
@@ -72,6 +73,14 @@ thread_view.reply_all=R          # Reply all to current message
 
 thread_view.reply_sender=G       # Reply to sender of current message
                                  # Default: R
+
+# F :: forward as attachment
+
+thread_index.forward_attached=F  # Forward last message in thread attached
+                                 # No defaults
+
+thread_view.forward_attached=F   # Forward current message as attachment
+                                 # No defaults
 
 # -----------
 # Thread View
@@ -98,11 +107,11 @@ thread_view.up=                  # Scroll up or move focus to previous element
 
 thread_view.next_thread=j        # Alias for thread_view.multi_next_thread\
                                  # .next_thread
-                                 # no defaults
+                                 # No defaults
 
 thread_view.previous_thread=k    # Alias for thread_view.multi_next_thread\
                                  # .previous_thread
-                                 # no defaults
+                                 # No defaults
 
 # m = toggle tag 'spam'
 

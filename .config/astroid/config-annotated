@@ -33,15 +33,33 @@
         }
     },
     "accounts": {
+        "austdomains": {
+            "name": "David Nebauer",
+            "email": "david@nebauer.id.au",
+            "gpgkey": "",
+            "always_gpg_sign": "false",
+            "sendmail": "msmtpq --account=austdomains -t --read-envelope-from",
+            "default": "true",
+            "save_sent": "true",
+            "save_sent_to": "\/home\/david\/.local\/mail\/\/maildirs\/austdomains\/INBOX.Sent\/cur\/",
+            "additional_sent_tags": "sent",
+            "save_drafts_to": "\/home\/david\/.local\/mail\/\/maildirs\/austdomains\/INBOX.Drafts\/cur\/",
+            "signature_separate": "false",
+            "signature_file": "",
+            "signature_file_markdown": "",
+            "signature_default_on": "false",
+            "signature_attach": "false",
+            "select_query": ""
+        },
         "hotkey": {
             "name": "David Nebauer",
             "email": "davidnebauer@hotkey.net.au",
             "gpgkey": "",
             "always_gpg_sign": "false",
             "sendmail": "msmtpq --account=bigpond -t --read-envelope-from",
-            "default": "true",
+            "default": "false",
             "save_sent": "true",
-            "save_sent_to": "\/home\/david\/.local\/mail\/\/maildirs\/hotkey\/Sent\/cur\/",
+            "save_sent_to": "\/home\/david\/.local\/mail\/\/maildirs\/hotkey\/INBOX.Sent\/cur\/",
             "additional_sent_tags": "sent",
             "save_drafts_to": "\/home\/david\/.local\/mail\/\/maildirs\/hotkey\/Drafts\/cur\/",
             "signature_separate": "false",
@@ -51,6 +69,7 @@
             "signature_attach": "false",
             "select_query": ""
         },
+
         "bigpond": {
             "name": "David Nebauer",
             "email": "davidnebauer3@bigpond.com",
@@ -112,17 +131,17 @@
         // embedded gvim
         // - as default plus move to 'To:' line, then try to insert at eol
         //   (except for unknown reason inserts at start of line)
-        "cmd": "gvim -geom 10x10 --servername %2 --socketid %3 -f '+set ft=mail' '+set fileencoding=utf-8' '+set ff=unix' '+set enc=utf-8' '+set fo+=w' '+/^To:/' '+startinsert!' %1",
+        //"cmd": "gvim -geom 10x10 --servername %2 --socketid %3 -f '+set ft=mail' '+set fileencoding=utf-8' '+set ff=unix' '+set enc=utf-8' '+set fo+=w' '+/^To:/' '+startinsert!' %1",
         //"cmd": "gvim -geom 10x10 --servername %2 --socketid %3 -f '+set ft=mail' '+set fileencoding=utf-8' '+set ff=unix' '+set enc=utf-8' '+set fo+=w' \"+call SyntaxRange#Include('^\s*$', '\%$', 'markdown', 'NonText')\" '+/^To:/' '+startinsert!' %1",
         // embedded st (suckless simple terminal) running nvim
         // - as per https://github.com/astroidmail/astroid/wiki/Customizing-editor#neovim-through-st
         // - plus commands as per gvim command above
-        //"cmd": "stterm -f 'Inconsolata:size=22' -w %3 -e nvim '+set ft=mail' '+set fileencoding=utf-8' '+set ff=unix' '+set enc=utf-8' '+set fo+=w' '+/^To:/' '+startinsert!' %1",
+        "cmd": "stterm -f 'Inconsolata:size=22' -w %3 -e nvim '+set ft=mail' '+set fileencoding=utf-8' '+set ff=unix' '+set enc=utf-8' '+set fo+=w' '+/^To:/' '+startinsert!' %1",
         "external_editor": "false",
         "charset": "utf-8",
         "save_draft_on_force_quit": "true",
-        "attachment_words": "attach",
-        "attachment_directory": "~",
+        "attachment_words": "attach, attachment, attached",
+        "attachment_directory": "\/home\/david\/Downloads",
         "markdown_processor": "marked"
     },
     "mail": {
@@ -145,9 +164,10 @@
         // - close mail message window after successfully sent
         "close_on_success": "true",
         // if change format_flowed from default false to true must also
-        // change vim configuration (see
+        // change vim configuration (as documented in 
         // github.com/astroidmail/astroid/wiki/Configuration-Reference)
-        "format_flowed": "false"
+        // -- see ~/.vim/rc/ft-mail.vim
+        "format_flowed": "true"
     },
     "poll": {
         // change interval from default 60 to 300
@@ -163,7 +183,7 @@
         // - a local wrapper for xdg-open that first scans for viruses
         //   then remains open until the attachment closes
         // - this is necessary because sometimes astroid will delete an
-        //   attachment before xdg-open opens the attachment file
+        //   attachment before xdg-open opens it
         "external_open_cmd": "astroid-scan-and-open"
     },
     "thread_view": {
