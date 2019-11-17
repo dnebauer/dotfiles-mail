@@ -34,8 +34,8 @@ path=/home/david/.local/mail/maildirs
 
 [user]
 name=David Nebauer
-primary_email=davidnebauer@hotkey.net.au
-other_email=davidnebauer3@bigpond.com;
+primary_email=david@nebauer.id.au
+other_email=davidnebauer@hotkey.net.au;davidnebauer3@bigpond.com;
 
 # Configuration for "notmuch new"
 #
@@ -55,7 +55,7 @@ other_email=davidnebauer3@bigpond.com;
 
 [new]
 tags=unread;inbox;new;
-ignore=Trash
+ignore=Trash;INBOX.Trash;
 
 # Search configuration
 #
@@ -68,7 +68,7 @@ ignore=Trash
 #
 
 [search]
-exclude_tags=deleted
+exclude_tags=deleted;
 
 # Maildir compatibility configuration
 #
