@@ -8,7 +8,8 @@ Comment=Graphical notmuch email client (interactive shell)
 # https://github.com/astroidmail/astroid/issues/450
 # No longer able to specify custom log file
 #Exec=bash -ic "/usr/bin/astroid --log /home/david/.local/mail/log/astroid.log %u &"
-Exec=bash -ic "/usr/bin/astroid %u &"
+Exec=bash -ic "/usr/bin/astroid --log-stdout --log-level debug %u &> /home/david/.local/mail/log/astroid.log &"
+#Exec=bash -ic "/usr/bin/astroid %u &"
 Icon=astroid
 #Terminal=false
 Terminal=true
