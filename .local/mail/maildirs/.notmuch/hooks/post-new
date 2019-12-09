@@ -28,6 +28,7 @@ command -v logger && logger -t notmuch "$SUMMARY -- $DETAIL"
 # display desktop notification message
 USE_POPUP='false'
 command -v notify-send &>/dev/null && USE_POPUP='true'
+DELAY=10000  # milliseconds
 MAILICON='/usr/share/astroid/ui/icons/astroid.svg'
 USE_ICON='false'
 [ -e "$MAILICON" ] && USE_ICON='true'
@@ -36,9 +37,9 @@ USE_ICON='false'
 if [ "$USE_POPUP" = 'true' ] && [ "x$DISPLAY" != "x" ] ; then
     if [ "$NEWCOUNT" -gt 0 ] ; then
         if [ "$USE_ICON" = 'true' ] ; then
-            notify-send -i "$MAILICON" "$SUMMARY" "$DETAIL"
+            notify-send -t "$DELAY" -i "$MAILICON" "$SUMMARY" "$DETAIL"
         else
-            notify-send "$SUMMARY" "$DETAIL"
+            notify-send -t "$DELAY" "$SUMMARY" "$DETAIL"
         fi
     fi
 fi
